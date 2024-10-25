@@ -1,7 +1,5 @@
 const ValidateModel = require("../Model/ValidateModel");
-
-
-const crypto = require("crypto");
+const crypto = require('crypto');
 
 const requestValidate = async (req, res) => {
     const email = req.headers['email'];
@@ -11,11 +9,10 @@ const requestValidate = async (req, res) => {
         const validateBatch = await ValidateModel.findOne({ where: { registerEmail: email } });
 
         if (!validateBatch) {
-            // Create a new entry with temporary codes
             const newValidate = await ValidateModel.create({
                 registerEmail: email,
-                registerCode: crypto.randomBytes(4).toString('hex'),  // Unique initial value
-                loginCode: crypto.randomBytes(4).toString('hex'),    // Unique initial value
+                registerCode: crypto.randomBytes(4).toString('hex'),
+                loginCode: crypto.randomBytes(4).toString('hex'),
                 registerStatus: false,
             });
 
@@ -27,7 +24,7 @@ const requestValidate = async (req, res) => {
                 registerCode: regiHash,
                 loginCode: loginHash,
             }, {
-                where: { id: id }  // Update the correct entry
+                where: { id: id }
             });
 
             return res.status(200).json({ message: "Validate successful.", data: regiHash });
