@@ -1,6 +1,7 @@
 const sequelize = require('./Config');
 const defineAssociations = require('../DBConfig/Association');
 const ValidateModel = require('../Model/ValidateModel');
+const BatchModel = require("../Model/BatchModel");
 
 const modelSynchronization = async () => {
     try {
