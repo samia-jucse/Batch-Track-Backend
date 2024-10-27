@@ -1,5 +1,4 @@
 const ValidateModel = require("../Model/ValidateModel");
-const crypto = require('crypto');
 
 const requestValidate = async (req, res) => {
     const email = req.headers['email'];
