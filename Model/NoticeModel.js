@@ -7,6 +7,7 @@ NoticeModel.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     author: { type: DataTypes.STRING },
+   
     title: { type: DataTypes.STRING },
     description: { type: DataTypes.STRING },
   },

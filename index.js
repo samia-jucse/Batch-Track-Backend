@@ -17,6 +17,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/batch-validate", validateController);
 app.use("/api/notice",noticeController);
+app.get('/api/notice',noticeController);
 
 async function startServer() {
     await modelSynchronization();

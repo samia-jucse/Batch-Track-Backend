@@ -1,7 +1,8 @@
 const express = require('express');
-const {handleNotice} = require("../View/NoticeView");
+const {createNotice,getAllNotices} = require("../View/NoticeView");
 const noticeController = express.Router();
 
-noticeController.post("/create",handleNotice);
+noticeController.post("/create",createNotice);
+noticeController.get("/all-notice",getAllNotices);
 
 module.exports = noticeController;
