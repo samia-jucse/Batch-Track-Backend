@@ -3,13 +3,13 @@ const UpdateProfileModel = require('../Model/UpdateProfileModel');
 
 
 const updateProfile = async (req,res)=>{
-    if (!req.body.data) {
+    if (!req.body) {
         return res.status(400).json({ message: 'No data provided' });
     }
     let data = req.body;
-    const { name, email, password,  details } = data;
+    const { name, email, phone, homeDisrict,photo } = data;
 
-    if (!name || !email || !password || !details ) {
+    if ( !name || !email || !phone || !homeDisrict || !photo ) {
         return res.status(400).json({ message: 'Invalid data provided' });
     }
 
@@ -17,13 +17,9 @@ const updateProfile = async (req,res)=>{
         const existingStudent = await UpdateProfileModel.findOne({ where: { email: email } })
         if (existingStudent) {
             const updateStudent = await UpdateProfileModel.create({
-                name,
-                email,
-                password,
-                details
-    
+                name, email, phone,  homeDisrict,photo
             });
-            return res.status(201).json(updateStudent);
+            return res.status(201).json({message:"Update successful.",data:updateStudent});
         }
         else {
             return res.status(409).json({ message: "Please valid Email" });
