@@ -5,7 +5,8 @@
   "scripts": {
     "test": "cross-env DEBUG=batchtrackbackend jest Test/Validate/getOneValidBatch.test.js",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "docs": "jsdoc -c jsdoc.json"
   },
   "keywords": [],
   "author": "",
