@@ -1,9 +1,11 @@
 const express = require("express");
-const {getallBatch,createBatch} = require("../View/BatchView");
+const { getallBatch, createBatch } = require("../View/BatchView");
 
 const batchController = express.Router();
 
-batchController.get("/allbatch",getallBatch);
-batchController.post("/createbatch",createBatch);
+// Define your routes
+batchController.get("/allbatch", getallBatch);
+batchController.post("/createbatch", createBatch);
 
-module.exports = {batchController};
+// Export the router directly
+module.exports = batchController;

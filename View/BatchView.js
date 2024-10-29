@@ -12,10 +12,12 @@ const getallBatch = async (req, res) => {
 }
 
 const createBatch = async (req, res) => {
-    if (!req.body.data) {
+    let data = req.body;
+    console.log(data);
+    
+    if (!req.body) {
         return res.status(400).json({ message: 'No data provided' });
     }
-    let data = req.body;
     const { name, email, password, session, profileimage, coverimage } = data;
 
     if (!name || !email || !password || !session || !profileimage || !coverimage) {
