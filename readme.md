@@ -44,7 +44,7 @@ const ValidateModel = require('../Model/ValidateModel');
 const ValidateModel = require("../Model/ValidateModel");
 const crypto = require('crypto');
 
-const requestValidate = async (req, res) => {
+const requestValidateTest = async (req, res) => {
     const email = req.headers['email'];
     console.log(email);
 
@@ -82,10 +82,10 @@ const requestValidate = async (req, res) => {
 };
 
 
-module.exports = {requestValidate};
+module.exports = {requestValidateTest};
 
 ```
-**Note :** If you export like ```module.exports = {requestValidate};``` You have to import like ``` const {requestValidate} = require("../View/ValidateView");```
+**Note :** If you export like ```module.exports = {requestValidateTest};``` You have to import like ``` const {requestValidateTest} = require("../View/ValidateView");```
 From Controller.
 
 ## Update Controller
@@ -93,10 +93,10 @@ From Controller.
 - Controller just control your route and pass the routes to appropriate functions. Like-
 ```
 const express = require('express');
-const {requestValidate} = require("../View/ValidateView");
+const {requestValidateTest} = require("../View/ValidateView");
 const validateController = express.Router();
 
-validateController.post("/validate",requestValidate);
+validateController.post("/validate",requestValidateTest);
 
 module.exports = validateController;
 ```

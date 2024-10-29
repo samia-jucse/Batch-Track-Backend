@@ -3,7 +3,6 @@ const crypto = require('crypto');
 
 const requestValidate = async (req, res) => {
     const email = req.headers['email'];
-    console.log(email);
     try {
         const validateBatch = await ValidateModel.findOne({ where: { registerEmail: email } });
 
@@ -32,7 +31,6 @@ const requestValidate = async (req, res) => {
         }
 
     } catch (err) {
-        console.error(err);
         return res.status(500).json({ message: "Something went wrong" });
     }
 };
