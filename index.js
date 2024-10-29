@@ -17,8 +17,7 @@ app.get("/", (req, res) => {
     res.send("hello world!");
 });
 
-/// Here Every one add their controller and ensure import/require top op the project
-/// This is my Route/Controller
+
 app.use("/api/batch-validate",validateController);
 app.use("/api/update",updateProfileController);
 async function startServer() {
