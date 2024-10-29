@@ -49,7 +49,7 @@ const createNotice = async (req, res) => {
 const getAllNotices = async (req, res) => {
     try {
         const notices = await NoticeModel.findAll({
-            order: [['createdAt', 'DESC']] // Orders by createdAt in descending order
+            order: [['createdAt', 'DESC']] 
         });
 
         if (notices.length > 0) {
