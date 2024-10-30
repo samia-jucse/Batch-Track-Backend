@@ -15,9 +15,6 @@ const createBatch = async (req, res) => {
     let data = req.body;
     console.log(data);
 
-    if (!data || Object.keys(data).length === 0) {
-        return res.status(400).json({ message: 'No data provided' });
-    }
     const { name, email, password, session, profileImage, coverImage } = data;
 
     if (!name || !email || !password || !session || !profileImage || !coverImage) {
