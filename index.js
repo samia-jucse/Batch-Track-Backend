@@ -4,6 +4,7 @@ const cors = require('cors');
 const modelSynchronization = require("./DBConfig/Synchronigation");
 const validateController = require("./Controller/ValidateConroller");
 const updateProfileController = require("./Controller/updateProfileController");
+const userProfileController = require('./Controller/UserController');
 const app = express();
 const port = 5000;
 
@@ -19,7 +20,8 @@ app.get("/", (req, res) => {
 
 
 app.use("/api/batch-validate",validateController);
-app.use("/api/update",updateProfileController);
+// app.use("/api/update",updateProfileController);
+app.use("/api/user",userProfileController);
 async function startServer() {
     await modelSynchronization();
     app.listen(port,() => {

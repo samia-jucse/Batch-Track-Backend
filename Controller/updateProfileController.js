@@ -1,9 +1,9 @@
-const express = require('express');
+// const express = require('express');
 
-const  updateProfile  = require("../View/UpdateProfileView");
+// const  updateProfile  = require("../View/UpdateProfileView");
 
-const updateProfileController = express.Router();
+// const updateProfileController = express.Router();
 
-updateProfileController.post('/updateprofile', updateProfile);
+// updateProfileController.post('/updateprofile', updateProfile);
 
-module.exports =  updateProfileController ;
+// module.exports =  updateProfileController ;
