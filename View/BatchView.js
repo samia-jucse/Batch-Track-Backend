@@ -1,6 +1,6 @@
 const BatchModel = require("../Model/BatchModel");
 
-const getallBatch = async (req, res) => {
+const getAllBatch = async (req, res) => {
     try {
         const batches = await BatchModel.findAll();
         return res.status(200).json(batches);
@@ -14,18 +14,18 @@ const getallBatch = async (req, res) => {
 const createBatch = async (req, res) => {
     let data = req.body;
     console.log(data);
-    
-    if (!req.body) {
+
+    if (!data || Object.keys(data).length === 0) {
         return res.status(400).json({ message: 'No data provided' });
     }
-    const { name, email, password, session, profileimage, coverimage } = data;
+    const { name, email, password, session, profileImage, coverImage } = data;
 
-    if (!name || !email || !password || !session || !profileimage || !coverimage) {
+    if (!name || !email || !password || !session || !profileImage || !coverImage) {
         return res.status(400).json({ message: 'Invalid data provided' });
     }
 
     try {
-        const existingBatch = await BatchModel.findOne({ where: { email: email } })
+        const existingBatch = await BatchModel.findOne({ where: { email: email } });
         if (existingBatch) {
             return res.status(409).json({ message: "Batch already exists with this email." });
         }
@@ -35,17 +35,16 @@ const createBatch = async (req, res) => {
             email,
             password,
             session,
-            profileimage,
-            coverimage
-
+            profileImage,
+            coverImage
         });
         return res.status(201).json(batch);
     }
     catch (error) {
-     console.error(err);
-     return res.status(500).json({error :"Internal Server Error"});
-    }
 
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
 };
 
-module.exports = {getallBatch,createBatch};
+
+module.exports = {getAllBatch,createBatch};

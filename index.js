@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const modelSynchronization = require("./DBConfig/Synchronigation");
 const validateController = require("./Controller/ValidateConroller");
-const batchController = require("./Controller/batchController");
+const batchController = require("./Controller/BatchController");
 const app = express();
 const port = 5000;
 
