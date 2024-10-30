@@ -13,7 +13,7 @@ const saveUser = async (req,res)=>{
         });
 
         
-        return res.status(201).json({message:"User is added successfullt",data:userProfile});
+        return res.status(201).json({message:"User is added successfully",data:userProfile});
     }catch(err){
         console.log(err);
         return res.status(500).json({message:"Internal server error"});
