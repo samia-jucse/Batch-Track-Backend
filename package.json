@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --coverage",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
@@ -19,5 +19,10 @@
     "mysql2": "^3.11.3",
     "nodemon": "^3.1.7",
     "sequelize": "^6.37.4"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jsdoc": "^4.0.4",
+    "jsdoc-template": "^1.2.0"
   }
 }

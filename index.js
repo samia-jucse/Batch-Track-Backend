@@ -4,6 +4,7 @@ const cors = require('cors');
 const modelSynchronization = require("./DBConfig/Synchronigation");
 const validateController = require("./Controller/ValidateConroller");
 const semesterController = require("./Controller/SemesterController");
+const batchController = require("./Controller/batchController");
 const app = express();
 const port = 5000;
 
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 /// This is my Route/Controller
 app.use("/api/batch-validate",validateController);
 app.use("/api/semester", semesterController);
+app.use("/api/batch",batchController);
 
 async function startServer() {
     await modelSynchronization();
