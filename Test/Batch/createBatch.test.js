@@ -1,7 +1,7 @@
 const { getAllBatch, createBatch } = require('../../View/BatchView'); // Adjust the path as necessary
 const BatchModel = require('../../Model/BatchModel'); // Adjust this path as needed
 
-jest.mock('../../Model/BatchModel'); // Mock the BatchModel
+jest.mock('../../Model/BatchModel');
 
 describe('Batch Controller', () => {
     let req, res;
@@ -13,8 +13,8 @@ describe('Batch Controller', () => {
                 email: 'batch@example.com',
                 password: 'password123',
                 session: '2023-2024',
-                profileImage: 'profile.jpg',
-                coverImage: 'cover.jpg',
+                profilePic: 'profile.jpg',
+                coverPic: 'cover.jpg',
             }
         };
         res = {
@@ -56,7 +56,10 @@ describe('Batch Controller', () => {
             await createBatch(req, res);
 
             expect(res.status).toHaveBeenCalledWith(201);
-            expect(res.json).toHaveBeenCalledWith(req.body);
+            expect(res.json).toHaveBeenCalledWith({
+                data: req.body, // Adjust this to match the response structure
+                message: "Batch Create Sucesfully"
+            });
         });
 
         test('should return 400 if required fields are missing', async () => {

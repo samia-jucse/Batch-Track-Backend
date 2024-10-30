@@ -13,11 +13,10 @@ const getAllBatch = async (req, res) => {
 
 const createBatch = async (req, res) => {
     let data = req.body;
-    console.log(data);
 
-    const { name, email, password, session, profileImage, coverImage } = data;
+    const { name, email, password, session, profilePic, coverPic } = data;
 
-    if (!name || !email || !password || !session || !profileImage || !coverImage) {
+    if (!name || !email || !password || !session || !profilePic || !coverPic) {
         return res.status(400).json({ message: 'Invalid data provided' });
     }
 
@@ -32,13 +31,12 @@ const createBatch = async (req, res) => {
             email,
             password,
             session,
-            profileImage,
-            coverImage
+            profilePic,
+            coverPic
         });
-        return res.status(201).json(batch);
+        return res.status(201).json({"data":batch,message: "Batch Create Sucesfully"});
     }
     catch (error) {
-
         return res.status(500).json({ error: "Internal Server Error" });
     }
 };

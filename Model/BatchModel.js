@@ -8,6 +8,7 @@ const BatchModel = sequelize.define('BatchModel',{
     name:{type:DataTypes.STRING},
     email: { type: DataTypes.STRING },
     password: { type: DataTypes.STRING },
+    session: { type: DataTypes.STRING },
     profilePic: { type: DataTypes.STRING },
     coverPic: { type: DataTypes.STRING }
  },
