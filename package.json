@@ -6,7 +6,8 @@
     "start": "node index.js",
     "test1": "jest Test/Batch/createBatch.test.js",
     "test2": "jest Test/Batch/getAllBatch.test.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+     "jsdoc" : "jsdoc -c jsdoc.json"
   },
   "keywords": [],
   "author": "",
@@ -25,5 +26,8 @@
     "nodemon": "^3.1.7",
     "sequelize": "^6.37.4",
     "supertest": "^7.0.0"
+  },
+  "devDependencies": {
+    "jsdoc": "^4.0.4"
   }
 }
