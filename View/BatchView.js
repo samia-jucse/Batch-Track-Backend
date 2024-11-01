@@ -14,7 +14,28 @@ const BatchModel = require("../Model/BatchModel");
  * @param {string} req.body.password - The new password for the batch.
  * @param {Object} res - The response object.
  * @returns {Promise<Object>} JSON response with a success or error message.
+
  */
+
+
+const getBatchById = async (req, res) => {
+    const batchID = req.headers['id'];
+
+    try {
+        const batch = await BatchModel.findByPk(batchID);
+
+        if (batch) {
+            return res.status(200).json({ batch });
+        }
+        return res.status(404).json({ message: "Batch not found." });
+        
+    } catch (e) {
+        return res.status(500).json({ message: e.message });
+    }
+};
+
+
+
 const updateBatch = async (req, res) => {
     const batchId = req.headers['id'];
     const { name, email, password } = req.body;
@@ -38,4 +59,6 @@ const updateBatch = async (req, res) => {
     }
 };
 
-module.exports = { updateBatch };
+
+
+module.exports = { updateBatch , getBatchById};
