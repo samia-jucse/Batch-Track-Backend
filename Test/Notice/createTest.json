@@ -1,0 +1,58 @@
+[
+    {
+        "testName": "Successful creation of a new notice",
+        "input": { "body": { "title": "Meeting Update", "description": "Details of the meeting", "author": "Admin" } },
+        "mockFindOne": null,
+        "mockCreate": { "id": 1, "title": "Meeting Update", "description": "Details of the meeting", "author": "Admin" },
+        "expectedStatus": 201,
+        "expectedResponse": { "message": "Notice created successfully.", "data": { "id": 1, "title": "Meeting Update", "description": "Details of the meeting", "author": "Admin" } }
+    },
+    {
+        "testName": "Notice already exists",
+        "input": { "body": { "title": "Meeting Update", "description": "Another meeting", "author": "User1" } },
+        "mockFindOne": { "id": 1, "title": "Meeting Update", "description": "Details of the meeting", "author": "Admin" },
+        "mockCreate": null,
+        "expectedStatus": 409,
+        "expectedResponse": { "message": "This notice already exists" }
+    },
+    {
+        "testName": "Database error during find",
+        "input": { "body": { "title": "Error Test", "description": "Testing database error", "author": "TestUser" } },
+        "mockFindOne": "Database error",
+        "mockCreate": null,
+        "expectedStatus": 500,
+        "expectedResponse": { "message": "Something went wrong" }
+    },
+    {
+        "testName": "Successful creation of notice with special characters",
+        "input": { "body": { "title": "Meeting! @#2023", "description": "Details about meeting with special characters", "author": "Admin" } },
+        "mockFindOne": null,
+        "mockCreate": { "id": 2, "title": "Meeting! @#2023", "description": "Details about meeting with special characters", "author": "Admin" },
+        "expectedStatus": 201,
+        "expectedResponse": { "message": "Notice created successfully.", "data": { "id": 2, "title": "Meeting! @#2023", "description": "Details about meeting with special characters", "author": "Admin" } }
+    },
+    {
+        "testName": "Creation attempt with title length exceeding limit",
+        "input": { "body": { "title": "A very long title that exceeds the maximum length allowed", "description": "This is a test", "author": "Admin" } },
+        "mockFindOne": null,
+        "mockCreate": null,
+        "expectedStatus": 400,
+        "expectedResponse": { "message": "Title exceeds maximum length" }
+    },
+    {
+        "testName": "Successful creation with only valid fields",
+        "input": { "body": { "title": "Valid Notice", "author": "User1" } },
+        "mockFindOne": null,
+        "mockCreate": { "id": 3, "title": "Valid Notice", "description": "Default description", "author": "User1" },
+        "expectedStatus": 201,
+        "expectedResponse": { "message": "Notice created successfully.", "data": { "id": 3, "title": "Valid Notice", "description": "Default description", "author": "User1" } }
+    },
+    {
+        "testName": "Validation error for empty input",
+        "input": { "body": {} },
+        "mockFindOne": null,
+        "mockCreate": null,
+        "expectedStatus": 400,
+        "expectedResponse": { "message": "Title is required, Description is required, Author is required" }
+    }
+]

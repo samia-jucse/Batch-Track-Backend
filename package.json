@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env DEBUG=batchtrackbackend jest Test/Notice/seeAllNotice.test.js",
+    "test": "cross-env DEBUG=batchtrackbackend jest Test/Notice/createNotice.test.js",
     "start": "node index.js",
     "dev": "nodemon index.js",
      "docs": "jsdoc -c jsdoc.json"

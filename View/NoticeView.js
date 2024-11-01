@@ -61,8 +61,9 @@ const getAllNotices = async (req, res) => {
         });
         debug("Fetched notices:", notices);
 
+        // Return the notices directly, assuming notices is an array of objects
         if (notices.length > 0) {
-            return res.status(200).json({ data: notices });
+            return res.status(200).json(notices); // Return the notices array directly
         } else {
             debug("No notices found in the database");
             return res.status(404).json({ message: "No notices found" });
@@ -72,5 +73,6 @@ const getAllNotices = async (req, res) => {
         return res.status(500).json({ message: "Something went wrong" });
     }
 };
+
 
 module.exports = { createNotice, getAllNotices };
