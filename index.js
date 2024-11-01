@@ -18,17 +18,16 @@ app.get("/", (req, res) => {
     res.send("hello world!");
 });
 
-/// Here Every one add their controller and ensure import/require top op the project
-/// This is my Route/Controller
-app.use("/api/batch-validate",validateController);
+app.use("/api/batch-validate", validateController);
 app.use("/api/semester", semesterController);
-app.use("/api/batch",batchController);
+app.use("/api/batch", batchController);
 
 async function startServer() {
     await modelSynchronization();
-    app.listen(port,() => {
+    app.listen(port, () => {
         console.log(`Server is running ${port}`);
     });
 }
 
 startServer().then(r => console.log(r));
+
