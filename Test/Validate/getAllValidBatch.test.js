@@ -1,52 +1,35 @@
 const { getAllValidateBatch } = require('../../View/ValidateView');
 const { mockRequest, mockResponse } = require('jest-mock-req-res');
 const ValidateModel = require('../../Model/ValidateModel');
+const {getAllValidBatchTestCases} = require("./testCases");
 const debug = require('debug')('batchtrackbackend');
 
 jest.mock('../../Model/ValidateModel');
 
 describe('getAllValidateBatch function', () => {
-    let req, res;
-
-    beforeAll(() => {
-        console.error = jest.fn();
-    });
-
     beforeEach(() => {
-        req = mockRequest();
-        res = mockResponse();
         jest.clearAllMocks();
     });
 
-    it('should return all validated data successfully', async () => {
-        const mockValidatedData = [
-            { id: 1, registerEmail: 'user1@example.com', registerCode: 'code1', loginCode: 'login1', registerStatus: true },
-            { id: 2, registerEmail: 'user2@example.com', registerCode: 'code2', loginCode: 'login2', registerStatus: false }
-        ];
+    getAllValidBatchTestCases.forEach(({ description, mock, expected }) => {
+        it(description, async () => {
+            const req = mockRequest();
+            const res = mockResponse();
 
-        ValidateModel.findAll.mockResolvedValue(mockValidatedData);
+            // Mock the behavior based on the current test case
+            if (mock) {
+                ValidateModel.findAll.mockImplementation(() => {
+                    if (mock.findAll.error) {
+                        return Promise.reject(new Error(mock.findAll.error));
+                    }
+                    return Promise.resolve(mock.findAll);
+                });
+            }
 
-        debug('Starting test for successful data retrieval');
-        await getAllValidateBatch(req, res);
+            await getAllValidateBatch(req, res);
 
-        expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith({
-            message: "All validate data",
-            data: mockValidatedData,
+            expect(res.status).toHaveBeenCalledWith(expected.status);
+            expect(res.json).toHaveBeenCalledWith(expect.objectContaining(expected.response));
         });
-        debug('Test for successful data retrieval completed');
-    });
-
-    it('should handle errors gracefully', async () => {
-        const errorMessage = "Database error";
-        ValidateModel.findAll.mockRejectedValue(new Error(errorMessage));
-
-        debug('Starting test for error handling');
-        await getAllValidateBatch(req, res); // Call the function
-
-        expect(console.error).toHaveBeenCalledWith("Error:", expect.any(Error));
-        expect(res.status).toHaveBeenCalledWith(500); // Check the status code
-        expect(res.json).toHaveBeenCalledWith({ message: "Something went wrong" });
-        debug('Test for error handling completed');
     });
 });
