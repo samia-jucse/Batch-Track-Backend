@@ -1,6 +1,6 @@
 const express = require("express");
 
-const {saveUser, deleteUser, updateUser} = require("../View/UserView");
+const {saveUser, deleteUser, updateUser, getAllUsers} = require("../View/UserView");
 
 const userProfileController = express.Router();
 
@@ -49,6 +49,7 @@ userProfileController.delete("/deleteUser/:id", deleteUser);
  * @param {function} updateUser - The controller function to handle updating the user.
  */
 userProfileController.put("/updateUser/:id", updateUser); // Use PUT for updates
+userProfileController.get("/getAllUsers", getAllUsers); // Use PUT for updates
 
 
 module.exports = userProfileController;

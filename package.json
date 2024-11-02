@@ -7,7 +7,6 @@
     "test1": "jest Test/User/SaveUse.test.js",
     "test2": "jest Test/User/Delete.test.js",
     "test3": "jest Test/User/Update.test.js",
-
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
@@ -16,6 +15,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "batchtrackbackend": "file:",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",

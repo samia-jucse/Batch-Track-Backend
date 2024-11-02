@@ -1,3 +1,4 @@
+const { all } = require("../Controller/UserController");
 const UserProfile = require("../Model/UserProfile");
 
 
@@ -124,6 +125,17 @@ const updateUser = async (req, res) => {
 };
 
 
+const getAllUsers = async (req,res)=>{
+    try{
+        const allUser = await UserProfile.findAll();
+        res.status(200).json({message:"All user here",allUser:allUser});
+    }catch(err){
+        console.log(err);
+        res.status(500).json({message:"Internal server error"});
+    }
+}
 
-module.exports = { saveUser, deleteUser, updateUser };
+
+
+module.exports = { saveUser, deleteUser, updateUser , getAllUsers};
 
