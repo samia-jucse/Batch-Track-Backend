@@ -6,7 +6,7 @@ const loginTestCases = [
                 result: { id: "user-id", email: "validuser@example.com", password: "ValidPassword123" }
             }
         },
-        input: { email: "validuser@example.com", password: "ValidPassword123" }, // Match the password
+        input: { email: "validuser@example.com", password: "ValidPassword123" },
         expected: {
             status: 200,
             response: {
@@ -19,7 +19,7 @@ const loginTestCases = [
         description: "Invalid password attempt",
         mock: {
             findOne: {
-                result: { id: "user-id", email: "validuser@example.com", password: "hashedpassword" } // Mocked user data
+                result: { id: "user-id", email: "validuser@example.com", password: "hashedpassword" }
             }
         },
         input: { email: "validuser@example.com", password: "WrongPassword" },
