@@ -7,7 +7,7 @@
     "test": "cross-env DEBUG=batchtrackbackend jest Test/Login/login.test.js",
     "test2": "jest Test/Batch/getAllBatch.test.js",
     "dev": "nodemon index.js",
-    "jsdoc": "jsdoc -c jsdoc.json"
+    "jsdoc": "jsdoc -c jsDoc.json"
   },
   "keywords": [],
   "author": "",
