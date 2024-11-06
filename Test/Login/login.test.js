@@ -33,13 +33,6 @@ describe('login function', () => {
             debug("After function call");
 
             expect(res.status).toHaveBeenCalledWith(expected.status);
-            // expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-            //     message: "Login success",
-            //     data: expect.objectContaining({
-            //         id: "user-id",
-            //         email: "validuser@example.com"
-            //     })
-            // }));
         });
     });
 });
