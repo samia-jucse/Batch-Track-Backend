@@ -2,7 +2,7 @@ const express = require('express');
 const {login} = require("../View/LoginView");
 const loginRouter = express.Router();
 
-loginRouter.get("/",login);
+loginRouter.post("/",login);
 
 
 module.exports = loginRouter;

@@ -7,27 +7,36 @@ jest.mock('../../Model/BatchModel', () => ({
     findOne: jest.fn(),
 }));
 
-const { findOne } = require('../../Model/BatchModel');
+jest.mock('../../Model/ValidateModel', () => ({
+    findOne: jest.fn(),
+}));
+
+const { findOne: findBatch } = require('../../Model/BatchModel');
+const { findOne: findValidate } = require('../../Model/ValidateModel');
 
 describe('login function', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
-    debug("before run test cases")
+    debug("before run test cases");
     loginTestCases.forEach(({ description, mock, input, expected }) => {
         it(description, async () => {
             const req = mockRequest({ body: input });
             const res = mockResponse();
 
             if (mock && mock.findOne) {
-                findOne.mockImplementation(() => {
-                    if (mock.findOne.result === null) {
-                        return Promise.resolve(null);
-                    }
-                    return Promise.resolve(mock.findOne.result);
+                findBatch.mockImplementation(() => {
+                    return mock.findOne.result;
                 });
             }
+
+            if (mock && mock.validate) {
+                findValidate.mockImplementation(() => {
+                    return mock.validate.result;
+                });
+            }
+
             debug("Before function call");
             await login(req, res);
             debug("After function call");
