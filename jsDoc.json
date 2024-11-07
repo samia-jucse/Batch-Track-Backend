@@ -10,7 +10,7 @@
   },
   "opts": {
     "encoding": "utf8",
-    "destination": "./docs",
+    "destination": "./Docs",
     "recurse": true
   }
 }
