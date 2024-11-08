@@ -104,7 +104,7 @@
     
 
     
-    <h4 class="name" id="createNotice"><span class="type-signature">(async) </span>createNotice<span class="signature">(req, res)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
+    <h4 class="name" id="createBatch"><span class="type-signature">(async) </span>createBatch<span class="signature">(req, res)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
     
 
     
@@ -112,7 +112,7 @@
 
 
 <div class="description">
-    Creates a new notice if it does not already exist.
+    Asynchronously creates a new batch in the database with the provided data and sends a JSON response.
 </div>
 
 
@@ -206,7 +206,7 @@
 
             
 
-            <td class="description last">The request body.
+            <td class="description last">The request body containing batch data.
                 <h6>Properties</h6>
                 
 
@@ -232,7 +232,7 @@
 
         <tr>
             
-                <td class="name"><code>title</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -248,14 +248,14 @@
 
             
 
-            <td class="description last">Title of the notice.</td>
+            <td class="description last">The name of the batch.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>description</code></td>
+                <td class="name"><code>email</code></td>
             
 
             <td class="type">
@@ -271,14 +271,14 @@
 
             
 
-            <td class="description last">Description of the notice.</td>
+            <td class="description last">The email associated with the batch.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>author</code></td>
+                <td class="name"><code>password</code></td>
             
 
             <td class="type">
@@ -294,7 +294,76 @@
 
             
 
-            <td class="description last">Author of the notice.</td>
+            <td class="description last">The password for the batch.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>session</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The session information for the batch.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>profilePic</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">URL for the profile picture of the batch.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>coverPic</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">URL for the cover picture of the batch.</td>
         </tr>
 
     
@@ -372,7 +441,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="NoticeView.js.html">NoticeView.js</a>, <a href="NoticeView.js.html#line4">line 4</a>
+        <a href="BatchView.js.html">BatchView.js</a>, <a href="BatchView.js.html#line24">line 24</a>
     </li></ul></dd>
     
 
@@ -395,13 +464,42 @@
 
 
 
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        - Returns a 400 status if data is invalid, a 409 status if a batch already exists with the given email, or a 500 status for other errors.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">Error</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
 
 
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
-    - Returns a JSON response with a message and data or error.
+    - Sends a JSON response with the created batch data if successful, or an error message if an error occurs.
 </div>
 
 
@@ -430,7 +528,7 @@
     
 
     
-    <h4 class="name" id="getAllNotices"><span class="type-signature">(async) </span>getAllNotices<span class="signature">(req, res)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
+    <h4 class="name" id="getAllBatch"><span class="type-signature">(async) </span>getAllBatch<span class="signature">(req, res)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
     
 
     
@@ -438,7 +536,7 @@
 
 
 <div class="description">
-    Retrieves all notices ordered by creation date in descending order.
+    Asynchronously retrieves all batches from the database and sends them as a JSON response.
 </div>
 
 
@@ -554,7 +652,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="NoticeView.js.html">NoticeView.js</a>, <a href="NoticeView.js.html#line40">line 40</a>
+        <a href="BatchView.js.html">BatchView.js</a>, <a href="BatchView.js.html#line3">line 3</a>
     </li></ul></dd>
     
 
@@ -577,13 +675,351 @@
 
 
 
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        - If there is an error retrieving the batches, a 500 status response is sent with an error message.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">Error</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
 
 
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
-    - Returns a JSON response with all notices or an error message.
+    - Returns a JSON response with all batches if successful, or an error message if an error occurs.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getBatchByName"><span class="type-signature">(async) </span>getBatchByName<span class="signature">(req, res)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Asynchronously retrieves a batch by name from the database and sends a JSON response.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request object.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>query</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The query parameters.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The name of the batch to retrieve.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response object.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="BatchView.js.html">BatchView.js</a>, <a href="BatchView.js.html#line71">line 71</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        - Returns a 400 status if the query parameter is missing, a 404 status if the batch is not found,                   or a 503/500 status for database/external service errors.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">Error</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - Sends a JSON response with the batch data if successful, or an error message if an error occurs.
 </div>
 
 
@@ -622,13 +1058,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#createNotice">createNotice</a></li><li><a href="global.html#getAllNotices">getAllNotices</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#createBatch">createBatch</a></li><li><a href="global.html#getAllBatch">getAllBatch</a></li><li><a href="global.html#getBatchByName">getBatchByName</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Oct 29 2024 21:08:59 GMT+0600 (Bangladesh Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Nov 09 2024 00:41:38 GMT+0600 (Bangladesh Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
