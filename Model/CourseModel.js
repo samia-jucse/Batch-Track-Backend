@@ -9,8 +9,7 @@ const CourseModel = sequelize.define('CourseModel', {
   },
   courseCode: {
     type: DataTypes.STRING,
-    allowNull: false, // Optional: Ensure the course code is not null
-    unique: true // Optional: Ensure the course code is unique
+    allowNull: false, 
   },
   courseName: {
     type: DataTypes.STRING,
@@ -26,11 +25,11 @@ const CourseModel = sequelize.define('CourseModel', {
   },
   prerequisites: {
     type: DataTypes.STRING,
-    allowNull: true // Optional: Can be null if no prerequisites
+    allowNull: true 
   },
   courseTeacher: {
     type: DataTypes.STRING,
-    allowNull: true // Optional: Can be null if no teacher is assigned
+    allowNull: true 
   }
 }, {
   timestamps: false
