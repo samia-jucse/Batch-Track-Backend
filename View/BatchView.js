@@ -11,18 +11,15 @@ const BatchModel = require("../Model/BatchModel");
  * 
  * @throws {Error} - If there is an error retrieving the batches, a 500 status response is sent with an error message.
  */
-
 const getAllBatch = async (req, res) => {
     try {
         const batches = await BatchModel.findAll();
         return res.status(200).json(batches);
-    }
-    catch (error) {
+    } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal server error" });
     }
-}
-
+};
 
 /**
  * Asynchronously creates a new batch in the database with the provided data and sends a JSON response.
@@ -42,18 +39,15 @@ const getAllBatch = async (req, res) => {
  *
  * @throws {Error} - Returns a 400 status if data is invalid, a 409 status if a batch already exists with the given email, or a 500 status for other errors.
  */
-
 const createBatch = async (req, res) => {
-    let data = req.body;
-
-    const { name, email, password, session, profilePic, coverPic } = data;
+    const { name, email, password, session, profilePic, coverPic } = req.body;
 
     if (!name || !email || !password || !session || !profilePic || !coverPic) {
         return res.status(400).json({ message: 'Invalid data provided' });
     }
 
     try {
-        const existingBatch = await BatchModel.findOne({ where: { email: email } });
+        const existingBatch = await BatchModel.findOne({ where: { email } });
         if (existingBatch) {
             return res.status(409).json({ message: "Batch already exists with this email." });
         }
@@ -66,26 +60,39 @@ const createBatch = async (req, res) => {
             profilePic,
             coverPic
         });
-        return res.status(201).json({"data":batch,message: "Batch Create Sucesfully"});
-    }
-    catch (error) {
-        return res.status(500).json({ error: "Internal Server Error" });
+
+        return res.status(201).json({ data: batch, message: "Batch created successfully" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal server error" });
     }
 };
 
-
-
+/**
+ * Asynchronously retrieves a batch by name from the database and sends a JSON response.
+ *
+ * @async
+ * @function getBatchByName
+ * @param {Object} req - The request object.
+ * @param {Object} req.query - The query parameters.
+ * @param {string} req.query.name - The name of the batch to retrieve.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - Sends a JSON response with the batch data if successful, or an error message if an error occurs.
+ *
+ * @throws {Error} - Returns a 400 status if the query parameter is missing, a 404 status if the batch is not found, 
+ *                   or a 503/500 status for database/external service errors.
+ */
 const getBatchByName = async (req, res) => {
-    
     try {
         const { name } = req.query;
+
         if (!name) {
             return res.status(400).json({ message: "Query parameter 'name' is required." });
         }
 
         const batches = await BatchModel.findAll({
             where: { name },
-            attributes: { exclude: ['password','id','email'] }
+            attributes: { exclude: ['password', 'id', 'email'] }
         });
 
         if (batches.length === 0) {
@@ -95,8 +102,6 @@ const getBatchByName = async (req, res) => {
         if (batches[0].name !== name) {
             return res.status(404).json({ message: "Batch name does not match." });
         }
-
-       
 
         return res.status(200).json(batches);
     } catch (error) {
@@ -114,8 +119,4 @@ const getBatchByName = async (req, res) => {
     }
 };
 
-module.exports = { getBatchByName };
-
-
-
-module.exports = {getAllBatch,createBatch,getBatchByName};
+module.exports = { getAllBatch, createBatch, getBatchByName };
