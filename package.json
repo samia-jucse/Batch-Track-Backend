@@ -7,7 +7,7 @@
     "test1": "jest Test/User/SaveUse.test.js",
     "test2": "jest Test/User/Delete.test.js",
     "test3": "jest Test/User/Update.test.js",
-    "test4": "jest Test/Notice/SendNotice.test.js",
+    "test5": "jest Test/Notice/AdminNotice.test.js",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
@@ -29,6 +29,7 @@
     "@babel/preset-env": "^7.26.0",
     "babel-jest": "^29.7.0",
     "jes": "^0.6.1",
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "jest-mock-req-res": "^1.0.2"
   }
 }
