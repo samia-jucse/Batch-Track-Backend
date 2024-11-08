@@ -1,5 +1,4 @@
-const CourseResourceModel = require('../../Model/CourseResourseModel');
-const BatchModel = require('../../Model/BatchModel');
+
 const { addResourse } = require("../../View/ResourseView");
 const { mockRequest, mockResponse } = require("jest-mock-req-res");
 const courseResourceTestCases = require("./AddCourseResourse")
