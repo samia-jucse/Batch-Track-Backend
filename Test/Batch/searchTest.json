@@ -1,0 +1,40 @@
+{
+    "validSearches": [
+        {
+            "description": "Valid Batch name search",
+            "input": "Prodigies",
+            "expected": [
+                { "message": "Batch found successfully",
+                 "status": 200 
+                }
+            ]
+        }
+    ],
+    "invalidSearches": [
+        {
+            "description": "Invalid Batch name",
+            "input": "jdhjdhkj",
+            "expected": [
+                { "message": "No batches found with the specified name.", 
+                "status": 404 }
+            ]
+        },
+        {
+            "description": "Batch name does not match (case-sensitive mismatch)",
+            "input": "prodigies",
+            "expected": [
+                { "message": "Batch name does not match.", 
+                "status": 404 }
+            ]
+        },
+        {
+            "description": "Database error handling",
+            "input": "Prodigies",
+            "expected": [
+                { "message": "Database service is temporarily unavailable.",
+                 "status": 503
+                 }
+            ]
+        }
+    ]
+}
