@@ -1,0 +1,235 @@
+const CourseResourceModel = require('../Model/CourseResourseModel');
+
+const BatchModel = require('../Model/BatchModel');
+
+const addResourse = async (req,res) =>{
+
+      const data = req.body ;
+
+      const {courseCode,resourseTitle,resourseDescription,resoursefile,email } = data;
+      const existigResourse = await CourseResourceModel.findOne({where :{resoursefile :resoursefile}})
+       
+     if(!courseCode || !resourseTitle || !resourseDescription || ! resoursefile  )
+     {
+        return res.status(400).json({ message: "Bad Request: Missing Any Field " });
+     }
+
+     if(existigResourse)
+      {
+         return res.status(402).json({message: "Already Post This Resourse"})
+      }
+
+       
+
+     try {
+       
+        const cr = await BatchModel.findOne({where: {email: email}})
+       
+        if(!cr)
+        {
+            return res.status(401).json({ message: "Unauthorized: You must be logged in as a Class Representative", data: null });
+        }
+        else {
+            const resourse = await CourseResourceModel.create({
+              courseCode,
+              resourseTitle,
+              resourseDescription,
+              resoursefile
+            })
+            return res.status(201).json({'data':resourse, message :"Course resource posted successfully"})
+        }
+       
+         
+
+
+     }
+     catch(error){
+        return res.status(500).json({ error: "Internal Server Error" });
+     }
+     
+
+}
+
+module.exports = addResourse ;   
+
+
+
+
+
+
+const courseResourceTestCases = [
+    // Test Case 1: Successful Resource Posting
+    {
+      id: 1,
+      description: "Successful resource posting",
+      mock: {
+        findOne: { result: { id: "user-id", role: "class-representative" } },
+        validate: { result: { registerEmail: "cruser@example.com", loginCode: "ValidLoginCode" } },
+        save: { result: { success: true } }
+      },
+      input: { 
+        courseCode: "CS101", 
+        resourceTitle: "Lecture Slides on Algorithms", 
+        resourceDescription: "Slides covering basic sorting algorithms", 
+        fileUpload: "algorithm_slides.pdf" 
+      },
+      expected: {
+        status: 200,
+        response: {
+          message: "Course resource posted successfully",
+          data: {
+            courseCode: "CS101",
+            resourceTitle: "Lecture Slides on Algorithms",
+            resourceDescription: "Slides covering basic sorting algorithms",
+            fileUpload: "algorithm_slides.pdf"
+          }
+        }
+      }
+    },
+
+
+
+
+
+
+
+
+    
+    // Test Case 2: Invalid File Type Uploaded
+    // {
+    //   id: 2,
+    //   description: "Invalid file type uploaded",
+    //   mock: {
+    //     findOne: { result: { id: "user-id", role: "class-representative" } },
+    //     validate: { result: { registerEmail: "cruser@example.com", loginCode: "ValidLoginCode" } }
+    //   },
+    //   input: { 
+    //     courseCode: "CS101", 
+    //     resourceTitle: "Lecture Slides on Algorithms", 
+    //     resourceDescription: "Slides covering basic sorting algorithms", 
+    //     fileUpload: "algorithm_slides.exe" 
+    //   },
+    //   expected: {
+    //     status: 400,
+    //     response: {
+    //       message: "Invalid resource type specified"
+    //     }
+    //   }
+    // },
+    
+    // // Test Case 3: Missing Required Fields (courseCode, resourceTitle, resourceDescription)
+    // {
+    //   id: 3,
+    //   description: "Missing required fields (courseCode, resourceTitle, and resourceDescription)",
+    //   mock: {
+    //     findOne: { result: { id: "user-id", role: "class-representative" } },
+    //     validate: { result: { registerEmail: "cruser@example.com", loginCode: "ValidLoginCode" } }
+    //   },
+    //   input: { 
+    //     courseCode: "", 
+    //     resourceTitle: "", 
+    //     resourceDescription: "", 
+    //     fileUpload: "algorithm_slides.pdf" 
+    //   },
+    //   expected: {
+    //     status: 400,
+    //     response: {
+    //       message: "Bad Request: Missing courseCode, resourceTitle or resourceDescription"
+    //     }
+    //   }
+    // },
+    
+    // // Test Case 4: Database Failure While Saving Resource
+    // {
+    //   id: 4,
+    //   description: "Database failure while saving resource",
+    //   mock: {
+    //     findOne: { result: { id: "user-id", role: "class-representative" } },
+    //     validate: { result: { registerEmail: "cruser@example.com", loginCode: "ValidLoginCode" } },
+    //     save: { result: Promise.reject(new Error("Database error")) }
+    //   },
+    //   input: { 
+    //     courseCode: "CS101", 
+    //     resourceTitle: "Lecture Slides on Algorithms", 
+    //     resourceDescription: "Slides covering basic sorting algorithms", 
+    //     fileUpload: "algorithm_slides.pdf" 
+    //   },
+    //   expected: {
+    //     status: 500,
+    //     response: {
+    //       message: "Failed to post course resources. Please try again later"
+    //     }
+    //   }
+    // },
+    
+    // // Test Case 5: Class Representative Not Logged In
+    // {
+    //   id: 5,
+    //   description: "Class Representative not logged in",
+    //   mock: {
+    //     findOne: { result: null }
+    //   },
+    //   input: { 
+    //     courseCode: "CS101", 
+    //     resourceTitle: "Lecture Slides on Algorithms", 
+    //     resourceDescription: "Slides covering basic sorting algorithms", 
+    //     fileUpload: "algorithm_slides.pdf" 
+    //   },
+    //   expected: {
+    //     status: 401,
+    //     response: {
+    //       message: "Unauthorized: You must be logged in as a Class Representative"
+    //     }
+    //   }
+    // },
+    
+
+    // // Test Case 6: User Email is Not Validated
+    // {
+    //   id: 6,
+    //   description: "User email is not validated",
+    //   mock: {
+    //     findOne: { result: { id: "user-id", email: "unvalidateduser@example.com", role: "class-representative" } },
+    //     validate: { result: null }
+    //   },
+    //   input: { 
+    //     courseCode: "CS101", 
+    //     resourceTitle: "Lecture Slides on Algorithms", 
+    //     resourceDescription: "Slides covering basic sorting algorithms", 
+    //     fileUpload: "algorithm_slides.pdf" 
+    //   },
+    //   expected: {
+    //     status: 405,
+    //     response: {
+    //       message: "Your email is not validated"
+    //     }
+    //   }
+    // },
+    
+
+    
+    // // Test Case 7: Invalid Login Secret (Incorrect Login Code)
+    // {
+    //   id: 7,
+    //   description: "Invalid login secret (incorrect login code)",
+    //   mock: {
+    //     findOne: { result: { id: "user-id", email: "validuser@example.com", role: "class-representative" } },
+    //     validate: { result: { registerEmail: "validuser@example.com", loginCode: "InvalidLoginCode" } }
+    //   },
+    //   input: { 
+    //     courseCode: "CS101", 
+    //     resourceTitle: "Lecture Slides on Algorithms", 
+    //     resourceDescription: "Slides covering basic sorting algorithms", 
+    //     fileUpload: "algorithm_slides.pdf", 
+    //     secret: "WrongLoginCode" 
+    //   },
+    //   expected: {
+    //     status: 406,
+    //     response: {
+    //       message: "Invalid login code"
+    //     }
+    //   }
+    // }
+  ];
+  
+ module.exports = courseResourceTestCases ;

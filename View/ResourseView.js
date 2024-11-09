@@ -12,7 +12,7 @@ const addResourse = async (req, res) => {
         return res.status(400).json({ message: "Missing courseCode, resourceTitle, resourceDescription, or resourceFile" });
     }
 
-    try {
+
         // Check if the resource already exists based on the resource file
         const existingResource = await CourseResourceModel.findOne({ where: { resourceFile } });
         if (existingResource) {
@@ -27,9 +27,7 @@ const addResourse = async (req, res) => {
             });
             return res.status(200).json({ data: resource, message: "Course resource posted successfully" });
         }
-    } catch (error) {
-        return res.status(500).json({ error: "Internal Server Error" });
-    }
+  
 }
 
 module.exports = { addResourse };
