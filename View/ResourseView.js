@@ -1,45 +1,35 @@
-
-const CourseResourceModel = require('../Model/CourseResourseModel');
-
+const { CourseResourceModel } = require('../Model/CourseResourseModel');
 const BatchModel = require('../Model/BatchModel');
 
-const addResourse = async (req,res) =>{
+const addResourse = async (req, res) => {
+    const data = req.body;
 
-      const data = req.body ;
+    // Corrected variable names to match the test cases
+    const { courseCode, resourceTitle, resourceDescription, resourceFile, email } = data;
 
-      const {courseCode,resourseTitle,resourseDescription,resourseFile,email } = data;
-     console.log( "ghhgcfwvfb", resourseFile);
-      const existigResourse = await CourseResourceModel.findOne({where :{resourseFile :resourseFile}})
-      console.log('testing',existigResourse);
-   
-      if(!courseCode || !resourseTitle || !resourseDescription || ! resourseFile  )
-         {
-            return res.status(400).json({ message: " Missing Any Field " });
-         }
-     
-     try{
-      if(existigResourse )
-         {
-            return res.status(402).json({message: "Already Post This Resourse"})
-         }
-  else{
-   const resourse = await CourseResourceModel.create({
-      courseCode,
-      resourseTitle,
-      resourseDescription,
-      resourseFile
-    })
-    return res.status(200).json({'data':resourse, message :"Course resource posted successfully"})
-  }
+    // Check for missing fields
+    if (!courseCode || !resourceTitle || !resourceDescription || !resourceFile) {
+        return res.status(400).json({ message: "Missing courseCode, resourceTitle, resourceDescription, or resourceFile" });
+    }
 
-     
-     }
-     catch(error)
-     {
-      return res.status(500).json({ error: "Internal Server Error" });
-  
-     }
-
+    try {
+        // Check if the resource already exists based on the resource file
+        const existingResource = await CourseResourceModel.findOne({ where: { resourceFile } });
+        if (existingResource) {
+            return res.status(402).json({ message: "Already posted this resource" });
+        } else {
+            // Create a new course resource
+            const resource = await CourseResourceModel.create({
+                courseCode,
+                resourceTitle,
+                resourceDescription,
+                resourceFile
+            });
+            return res.status(200).json({ data: resource, message: "Course resource posted successfully" });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
 }
 
-module.exports = {addResourse} ;
+module.exports = { addResourse };

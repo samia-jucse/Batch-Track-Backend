@@ -6,11 +6,12 @@ const CourseResourceModel = sequelize.define('CourseResourseModel',{
 
     id:{type:DataTypes.INTEGER,autoIncrement:true,primaryKey: true },
     courseCode: {type:DataTypes.STRING},
-    resourseTitle :{type:DataTypes.STRING},
-    resourseDescription:{type:DataTypes.STRING},
-    resourseFile:{type:DataTypes.STRING}
+    resourceTitle :{type:DataTypes.STRING},
+    resourceDescription:{type:DataTypes.STRING},
+    resourceFile:{type:DataTypes.STRING}
 
 },
 { timestamps: false } );
 
-module.exports = CourseResourceModel ;
+module.exports = {CourseResourceModel} ;
+
