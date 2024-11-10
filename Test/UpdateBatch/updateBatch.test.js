@@ -1,5 +1,6 @@
 const { updateBatch } = require('../../View/BatchView');
 const BatchModel = require('../../Model/BatchModel');
+const testCases = require('./updateTest.json'); // Load the JSON file
 
 jest.mock('../../Model/BatchModel.js');
 
@@ -8,8 +9,8 @@ describe('updateBatch', () => {
 
     beforeEach(() => {
         req = {
-            headers: { id: '1' },
-            body: { name: 'New Name', email: 'newemail@example.com', password: 'newpassword' }
+            headers: {},
+            body: {}
         };
         res = {
             status: jest.fn().mockReturnThis(),
@@ -17,42 +18,34 @@ describe('updateBatch', () => {
         };
     });
 
-    it('should update batch and return success message', async () => {
-        const batch = { id: '1', name: 'Old Name', email: 'oldemail@example.com', password: 'oldpassword' };
-        
-        BatchModel.findByPk.mockResolvedValue(batch);
-        BatchModel.update.mockResolvedValue([1]); // returns 1 to indicate one record was updated
+    testCases.forEach(({ description, mock, input, expected }) => {
+        it(description, async () => {
+            req.headers = input.headers;
+            req.body = input.body;
+            if (mock.findByPk) {
+                if (mock.findByPk.error) {
+                    BatchModel.findByPk.mockRejectedValue(new Error(mock.findByPk.error.message));
+                } else {
+                    BatchModel.findByPk.mockResolvedValue(mock.findByPk.result);
+                }
+            }
 
-        await updateBatch(req, res);
+            if (mock.update) {
+                BatchModel.update.mockResolvedValue(mock.update.result);
+            }
 
-        expect(BatchModel.findByPk).toHaveBeenCalledWith('1');
-        expect(BatchModel.update).toHaveBeenCalledWith({
-            name: 'New Name',
-            email: 'newemail@example.com',
-            password: 'newpassword'
-        }, { where: { id: '1' } });
-        expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith({ message: 'Update successful.', data: [1] });
-    });
-
-    it('should return 404 if batch not found', async () => {
-        BatchModel.findByPk.mockResolvedValue(null);
-
-        await updateBatch(req, res);
-
-        expect(BatchModel.findByPk).toHaveBeenCalledWith('1');
-        expect(res.status).toHaveBeenCalledWith(404);
-        expect(res.json).toHaveBeenCalledWith({ message: 'Batch not found.' });
-    });
-
-    it('should return 500 if an error occurs', async () => {
-        const errorMessage = 'Something went wrong';
-        BatchModel.findByPk.mockRejectedValue(new Error(errorMessage));
-
-        await updateBatch(req, res);
-
-        expect(BatchModel.findByPk).toHaveBeenCalledWith('1');
-        expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
+            await updateBatch(req, res);
+            expect(BatchModel.findByPk).toHaveBeenCalledWith(input.headers.id);
+            if (mock.update) {
+                expect(BatchModel.update).toHaveBeenCalledWith(
+                    req.body,
+                    { where: { id: input.headers.id } }
+                );
+            }
+            expect(res.status).toHaveBeenCalledWith(expected.status);
+            if (expected.json) {
+                expect(res.json).toHaveBeenCalledWith(expected.json);
+            }
+        });
     });
 });

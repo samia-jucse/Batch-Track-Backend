@@ -6,5 +6,4 @@ const batchController = express.Router();
 batchController.put("/updateBatch",updateBatch);
 batchController.get("/getBatch",getBatchById);
 
-
 module.exports = batchController;

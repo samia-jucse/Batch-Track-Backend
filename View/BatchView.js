@@ -34,8 +34,6 @@ const getBatchById = async (req, res) => {
     }
 };
 
-
-
 const updateBatch = async (req, res) => {
     const batchId = req.headers['id'];
     const { name, email, password } = req.body;
