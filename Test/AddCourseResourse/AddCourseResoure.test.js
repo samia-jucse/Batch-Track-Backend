@@ -1,23 +1,24 @@
 
 const { addResourse } = require("../../View/ResourseView");
 const { mockRequest, mockResponse } = require("jest-mock-req-res");
-const {courseResourceTestCases} = require("./AddCourseResourse")
+const { courseResourceTestCases } = require("./AddCourseResourse");
 const debug = require('debug')('batchtrackbackend');
 
 jest.mock('../../Model/CourseResourseModel', () => ({
     create: jest.fn(),
+    findOne: jest.fn(), 
 }));
 
 jest.mock('../../Model/BatchModel', () => ({
     findOne: jest.fn(),
 }));
 
-const { create: createResource } = require('../../Model/CourseResourseModel');
-const { findOne: findTheValidCR } = require('../../Model/BatchModel');
+const { create: createResource, findOne: findCourseResource } = require('../../Model/CourseResourseModel');
+const { findOne: findBatch } = require('../../Model/BatchModel');
 
 describe('addCourseResource function', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        jest.clearAllMocks(); 
     });
 
     debug("Before running test cases");
@@ -26,13 +27,18 @@ describe('addCourseResource function', () => {
             const req = mockRequest({ body: input });
             const res = mockResponse();
 
-            if (mock && mock.mock) {
-                createResource.mockResolvedValue(mock.mock.save.result); 
+            if (mock.findOne) {
+                findBatch.mockResolvedValue(mock.findOne.result); 
             }
 
-    
-            if (mock && mock.findOne) {
-                findTheValidCR.mockResolvedValue(mock.findOne.result);
+            if (mock.existingResource) {
+                findCourseResource.mockResolvedValue(mock.existingResource.result); 
+            } else {
+                findCourseResource.mockResolvedValue(null); 
+            }
+
+            if (mock.save) {
+                createResource.mockResolvedValue(mock.save.result); 
             }
 
             res.status = jest.fn().mockReturnThis(); 
@@ -42,7 +48,9 @@ describe('addCourseResource function', () => {
             await addResourse(req, res); 
             debug("After function call");
 
-            expect(res.status).toHaveBeenCalledWith(expected.status);
+            expect(res.status).toHaveBeenCalledWith(expected.status); 
+           
         });
     });
 });
+

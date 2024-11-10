@@ -13,5 +13,5 @@ const CourseResourceModel = sequelize.define('CourseResourseModel',{
 },
 { timestamps: false } );
 
-module.exports = {CourseResourceModel} ;
+module.exports = CourseResourceModel ;
 
