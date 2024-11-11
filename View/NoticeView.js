@@ -28,7 +28,10 @@ const sendNotice = async (req, res) => {
   
       res.status(200).json({
         message: 'Department notice sent successfully',
-        notice,
+        // notice: {
+        //  // id: notice.id,
+        //   // assuming you are sending this
+        // },
       });
     } catch (error) {
       console.error('Error sending department notice:', error);

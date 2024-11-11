@@ -38,10 +38,15 @@ describe('sendNotice function', () => {
             }
 
             await sendNotice(req, res);
+           // console.log(res.json.mock.calls);
+            console.log('Actual response:', res.json.mock.calls);
+            console.log("Expected response:", expected.response);
 
             expect(res.status).toHaveBeenCalledWith(expected.status);
             if (expected.response) {
                 expect(res.json).toHaveBeenCalledWith(expected.response);
+        
+                
             }
         });
     });
