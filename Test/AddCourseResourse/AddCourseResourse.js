@@ -82,7 +82,28 @@ const courseResourceTestCases = [
                 message: "Unauthorized: You must be logged in as a Class Representative"
             }
         }
-    }
+    },
+    {
+      id: 5,
+      description: "Database failure while saving resource",
+      mock: {
+        findOne: {
+            result: Promise.reject(new Error("Database error"))
+        }
+    },
+      input: { 
+        courseCode: "CS101", 
+        resourceTitle: "Lecture Slides on Algorithms", 
+        resourceDescription: "Slides covering basic sorting algorithms", 
+        fileUpload: "algorithm_slides.pdf" 
+      },
+      expected: {
+        status: 500,
+        response: {
+          message: "Failed to post course resources. Please try again later"
+        }
+     }
+    }, 
 ];
 
 module.exports = { courseResourceTestCases };
