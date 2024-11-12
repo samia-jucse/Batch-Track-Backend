@@ -40,7 +40,31 @@ const sendNotice = async (req, res) => {
       });
     }
   };
+
+
+
+
+
+
+const getAllNotices = async (req, res) => {
+    try {
+      // Fetch all notices from the database
+      const notices = await NoticeModel.findAll(); // Adjust query as necessary
+      
+      // Send the notices in the response
+      res.status(200).json({
+        message: 'Notices retrieved successfully',
+        notices,
+      });
+    } catch (error) {
+      console.error('Error retrieving notices:', error);
+      res.status(500).json({
+        message: 'Failed to retrieve notices',
+      });
+    }
+  };
   
   
 
-module.exports = { sendNotice };
+module.exports = { sendNotice,getAllNotices };
+

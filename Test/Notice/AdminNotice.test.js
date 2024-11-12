@@ -11,6 +11,12 @@ jest.mock('../../Model/UserModel', () => ({
     findOne: jest.fn(),
 }));
 
+
+jest.mock("../../Model/NoticeModel", () => ({
+    findAll: jest.fn(),
+}));
+
+
 const { create: createNotice } = require('../../Model/NoticeModel');
 const { findOne: findUser } = require('../../Model/UserModel');
 
@@ -47,6 +53,40 @@ describe('sendNotice function', () => {
                 expect(res.json).toHaveBeenCalledWith(expected.response);
         
                 
+            }
+        });
+    });
+});
+
+
+
+
+const { findAll: findNotices } = require('../../Model/NoticeModel');
+
+describe('findAllNotices function', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    NoticeTestCases.forEach(({ description, mock, input, expected }) => {
+        it(description, async () => {
+            const req = mockRequest({ body: input });
+            const res = mockResponse();
+
+            if (mock && mock.findNotices) {
+                // Mock the implementation for findNotices to return or reject as per the test case
+                if (mock.findNotices.result instanceof Error) {
+                    findNotices.mockImplementation(() => Promise.reject(mock.findNotices.result));
+                } else {
+                    findNotices.mockImplementation(() => Promise.resolve(mock.findNotices.result));
+                }
+            }
+
+            await findAllNotices(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(expected.status);
+            if (expected.response) {
+                expect(res.json).toHaveBeenCalledWith(expected.response);
             }
         });
     });

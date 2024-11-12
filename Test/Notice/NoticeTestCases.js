@@ -25,24 +25,7 @@ const NoticeTestCases = [
             }
         }
     },
-//     {
-//         id: 2,
-//         description: "Unauthorized user attempt",
-//         mock: {
-//             findUser: { result: { role: "Student", departmentId: "dept1" } }
-//         },
-//         input: {
-            //  title: "Meeting Notice",
-            // content: "All faculty are requested to attend.",
-            // audienceType: "faculty",
-            // departmentId: "dept1",
-        
-//         },
-//         expected: {
-//             status: 403,
-//             response: { message: "You are not authorised to send department notices" }
-//         }
-//     },
+
     {
         id: 3,
         description: "Missing required fields",
