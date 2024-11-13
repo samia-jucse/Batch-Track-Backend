@@ -33,7 +33,7 @@ const addCourse = async (req, res) => {
       return res.status(400).json({ message: "Invalid course code format", data: null });
     }
       if (courseHours > 5) {
-        return res.status(400).json({ message: "Course hours cannot exceed 40 hours per week", data: null });
+        return res.status(400).json({ message: "Course hours cannot exceed 5 hours per week", data: null });
       }
     // Create a new course in the database
     const course = await CourseModel.create({
