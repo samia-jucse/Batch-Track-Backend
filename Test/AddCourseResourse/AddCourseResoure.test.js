@@ -1,7 +1,7 @@
 
 const { addResourse } = require("../../View/ResourseView");
 const { mockRequest, mockResponse } = require("jest-mock-req-res");
-const { courseResourceTestCases } = require("./AddCourseResourse");
+const { courseResourceTestCases } = require("./addCourseResourseTestCases");
 const debug = require('debug')('batchtrackbackend');
 
 jest.mock('../../Model/CourseResourseModel', () => ({

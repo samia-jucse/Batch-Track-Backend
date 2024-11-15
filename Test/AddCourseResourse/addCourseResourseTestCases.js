@@ -79,7 +79,7 @@ const courseResourceTestCases = [
         expected: {
             status: 401,
             response: {
-                message: "Unauthorized: You must be logged in as a Class Representative"
+                message: "You must be logged in as a Class Representative"
             }
         }
     },
@@ -100,7 +100,7 @@ const courseResourceTestCases = [
       expected: {
         status: 500,
         response: {
-          message: "Failed to post course resources. Please try again later"
+          message: "Internal server error"
         }
      }
     }, 
