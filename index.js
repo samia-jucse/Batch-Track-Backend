@@ -5,7 +5,7 @@ const modelSynchronization = require("./DBConfig/Synchronigation");
 const validateController = require("./Controller/ValidateConroller");
 
 const userProfileController = require('./Controller/UserController');
-const noticeRouter = require('./Controller/NoticeController');
+const noticeController = require("./Controller/NoticeController");
 const app = express();
 const port = 5000;
 
@@ -23,13 +23,10 @@ app.get("/", (req, res) => {
 app.use("/api/batch-validate",validateController);
 // app.use("/api/update",updateProfileController);
 app.use("/api/user",userProfileController);
-async function startServer() {
-    await modelSynchronization();
-    app.listen(port,() => {
-        console.log(`Server is running ${port}`);
-    });
-}
-app.use("/api/adnotice",noticeRouter);
+
+app.use("/api/addNotice",noticeController);
+
+
 async function startServer() {
     await modelSynchronization();
     app.listen(port,() => {

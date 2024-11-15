@@ -18,7 +18,7 @@ const NoticeModel = sequelize.define('Notice', {
         allowNull: false,
     },
     audienceType: {
-        type: DataTypes.ENUM('faculty', 'staff', 'students','all'),  // Modify as needed
+        type: DataTypes.STRING,
         allowNull: false,
     },
     departmentId: {

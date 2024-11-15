@@ -1,13 +1,13 @@
 const express = require('express');
 const { sendNotice, getAllNotices } = require("../View/NoticeView");
-const noticeRouter = express.Router();
+const noticeController = express.Router();
 
-noticeRouter.post("/sendNotice", sendNotice);
-
-
-noticeRouter.get('/notices', getAllNotices);
+noticeController.post("/sendNotice", sendNotice);
 
 
-module.exports = noticeRouter;
+noticeController.get('/notices', getAllNotices);
+
+
+module.exports = noticeController;
 
 
